@@ -1,0 +1,19 @@
+﻿/*#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+    */
+
+#root {
+    position: absolute;
+    left:0px;
+    right: 0px;
+    top: 0px;
+}
+
+th, td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
