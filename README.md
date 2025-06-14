@@ -1,4 +1,4 @@
-# MusicPlayer
+# Modern Music Player
 
 A modern music player written in ReactJS and C#. Features include:
 - pausing and playing music
