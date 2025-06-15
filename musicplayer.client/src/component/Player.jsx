@@ -6,7 +6,8 @@ import { IoPlayCircleOutline, IoPauseCircleOutline } from "react-icons/io5";
 import { BiSkipNext, BiSkipPrevious } from "react-icons/bi";
 import { IconContext } from "react-icons";
 import '../styles.css';
-//import { playAudio, pauseAudio, stopAudio, getCurrTime, getDuration } from './Audio';
+
+import { playAudio, pauseAudio, seekAudio, getCurrTime, getDuration } from './Audio';
 
 
 
@@ -25,12 +26,14 @@ export default function Player() {
 
     const [seconds, setSeconds] = useState();
 
-    const [play, { pause, duration, sound }] = useSound(menutheme);
+    const duration = getDuration();
+
+    //const [play, { pause, duration, sound }] = useSound(menutheme);
 
     useEffect(() => {
-        //const duration = getDuration();
         if (duration) {
-            const second = duration / 1000;
+            //const second = duration / 1000;
+            const second = duration
             const minute = Math.floor(second / 60);
             const remainingSeconds = Math.floor(second % 60);
             setTime({
@@ -38,31 +41,31 @@ export default function Player() {
                 second: remainingSeconds
             });
         }
-    }, [duration, isPlaying]);
+    }, []);
         
 
     useEffect(() => {
         const interval = setInterval(() => {
-            if (sound) {
-                setSeconds(sound.seek([]));
-                const minute = Math.floor(sound.seek([]) / 60);
-                const second = Math.floor(sound.seek([]) % 60);
-                setCurrentTime({
-                    minute,
-                    second,
-                });
-            }
+            const currTime = getCurrTime();
+            const minute = Math.floor(currTime / 60);
+            const second = Math.floor(currTime % 60);
+            setCurrentTime({
+                minute,
+                second
+            });
         }, 1000);
         return () => clearInterval(interval);
-        }, [sound]);
+    }, []);
+
 
         const playingButton = () => {
             if (isPlaying) {
-                pause();
+                //pause();
+                pauseAudio();
                 setIsPlaying(false);
             }
             else {
-                play();
+                playAudio();
                 setIsPlaying(true);
             }
         };
@@ -90,12 +93,16 @@ export default function Player() {
                     <input
                         type="range"
                         min="0"
-                        max={duration / 1000}
+                        max={duration}
                         default="0"
+                        step={0.1}
                         value={seconds}
                         className="timeline"
                         onChange={(e) => {
-                            sound.seek([e.target.value]);
+                            const newTime = parseFloat(e.target.value);
+                            seekAudio(newTime);
+                            setSeconds(newTime);
+                            
                         }}
                     />
                 </div>
