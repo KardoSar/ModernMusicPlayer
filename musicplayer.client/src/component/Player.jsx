@@ -81,82 +81,82 @@ export default function Player() {
     }, []);
 
 
-        const playingButton = () => {
-            if (isPlaying) {
-                //pause();
-                pauseAudio();
-                setIsPlaying(false);
-            }
-            else {
-                playAudio();
-                setIsPlaying(true);
-            }
-        };
+    const playingButton = () => {
+        if (isPlaying) {
+            //pause();
+            pauseAudio();
+            setIsPlaying(false);
+        }
+        else {
+            playAudio();
+            setIsPlaying(true);
+        }
+    };
 
-        return (
-            <div className="component">
-                <h2>Now Playing: </h2>
-                <img
-                    className="musicCover"
-                    src="https://picsum.photos/200/200"
-                />
-                <div>
-                    <h3 className="title">Menu Theme</h3>
-                    <p className="subTitle">Myself</p>
-                </div>
-                <div>
-                    <div className="time">
-                        <p>
-                            {currentTime.minute}:{currentTime.second}
-                        </p>
-                        <p>
-                            {time.minute}:{time.second}
-                        </p>
-                    </div>
-                    <input
-                        type="range"
-                        min="0"
-                        max={totalSeconds ? totalSeconds : 0}
-                        value={seconds || 0 }
-                        //default="0"
-                        step={0.1}
-                        value={seconds}
-                        className="timeline"
-                        onChange={(e) => {
-                            const newTime = parseFloat(e.target.value);
-                            seekAudio(newTime);
-                            setSeconds(newTime);
-                            
-                        }}
-                    />
-                </div>
-                <div>
-                    <button className="playButton">
-                        <IconContext.Provider value={{ size: "3em", color: "#5D3FD3" }}>
-                            <BiSkipPrevious />
-                        </IconContext.Provider>
-                    </button>
-                    {!isPlaying ? (
-                        <button className="playButton" onClick={playingButton}>
-                            <IconContext.Provider value={{ size: "3em", color: "#5D3FD3" }}>
-                                <IoPlayCircleOutline />
-                            </IconContext.Provider>
-                        </button>
-                    ) : (
-                        <button className="playButton" onClick={playingButton}>
-                            <IconContext.Provider value={{ size: "3em", color: "#5D3FD3" }}>
-                                <IoPauseCircleOutline />
-                            </IconContext.Provider>
-                        </button>
-                    )}
-                    <button className="playButton">
-                        <IconContext.Provider value={{ size: "3em", color: "#5D3FD3" }}>
-                            <BiSkipNext />
-                        </IconContext.Provider>
-                    </button>
-                </div>
+    return (
+        <div className="component">
+            <h2>Now Playing: </h2>
+            <img
+                className="musicCover"
+                src="https://picsum.photos/200/200"
+            />
+            <div>
+                <h3 className="title">Menu Theme</h3>
+                <p className="subTitle">Myself</p>
             </div>
-        );
+            <div>
+                <div className="time">
+                    <p>
+                        {currentTime.minute}:{currentTime.second}
+                    </p>
+                    <p>
+                        {time.minute}:{time.second}
+                    </p>
+                </div>
+                <input
+                    type="range"
+                    min="0"
+                    max={totalSeconds ? totalSeconds : 0}
+                    value={seconds || 0 }
+                    //default="0"
+                    step={0.1}
+                    value={seconds}
+                    className="timeline"
+                    onChange={(e) => {
+                        const newTime = parseFloat(e.target.value);
+                        seekAudio(newTime);
+                        setSeconds(newTime);
+                            
+                    }}
+                />
+            </div>
+            <div>
+                <button className="playButton">
+                    <IconContext.Provider value={{ size: "3em", color: "#5D3FD3" }}>
+                        <BiSkipPrevious />
+                    </IconContext.Provider>
+                </button>
+                {!isPlaying ? (
+                    <button className="playButton" onClick={playingButton}>
+                        <IconContext.Provider value={{ size: "3em", color: "#5D3FD3" }}>
+                            <IoPlayCircleOutline />
+                        </IconContext.Provider>
+                    </button>
+                ) : (
+                    <button className="playButton" onClick={playingButton}>
+                        <IconContext.Provider value={{ size: "3em", color: "#5D3FD3" }}>
+                            <IoPauseCircleOutline />
+                        </IconContext.Provider>
+                    </button>
+                )}
+                <button className="playButton">
+                    <IconContext.Provider value={{ size: "3em", color: "#5D3FD3" }}>
+                        <BiSkipNext />
+                    </IconContext.Provider>
+                </button>
+            </div>
+        </div>
+    );
 
 }
 
