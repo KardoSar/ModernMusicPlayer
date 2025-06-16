@@ -23,12 +23,18 @@ export default class App extends Component {
     static displayName = App.name;
 
     render() {
+
+        const loc = window.location.pathname
+
         return (
             <Layout>
                 <Routes>
                     {AppRoutes.map((route, index) => {
                         const { element, ...rest } = route;
-                        return <Route key={index} {...rest} element={element} />;
+                        return <Route
+                            key={index}
+                            {...rest}
+                            element={React.cloneElement(element, {key: loc})} />;
                     })}
                 </Routes>
             </Layout>

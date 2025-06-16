@@ -7,7 +7,7 @@ import { BiSkipNext, BiSkipPrevious } from "react-icons/bi";
 import { IconContext } from "react-icons";
 import '../styles.css';
 
-import { playAudio, pauseAudio, seekAudio, getCurrTime, getDuration, getAudio } from './Audio';
+import { playAudio, pauseAudio, seekAudio, stopAudio, getCurrTime, getDuration, getAudio } from './Audio';
 
 
 
@@ -27,20 +27,31 @@ export default function Player() {
     const [seconds, setSeconds] = useState(0);
     const [totalSeconds, setTotalSeconds] = useState(0);
 
-    //const [play, { pause, duration, sound }] = useSound(menutheme);
 
+    // controls the slider
     useEffect(() => {
-        getAudio().once('load', () => {
+        const audio = getAudio();
+
+        const updateSlider = () => {
             const audioDuration = getDuration();
             setTotalSeconds(audioDuration);
             const min = Math.floor(audioDuration / 60);
+            // formats seconds to always show two digits
             const sec = Math.floor(audioDuration % 60).toString().padStart(2, '0');
             setTime({
                 minute: min,
                 second: sec
             });
 
-        });
+        };
+
+        if (audio.state() === 'loaded') {
+            updateSlider();
+        }
+        else {
+            audio.once('load', updateSlider);
+        }
+
     }, []);
         
 
@@ -48,13 +59,25 @@ export default function Player() {
         const interval = setInterval(() => {
             const currTime = getCurrTime();
             const minute = Math.floor(currTime / 60);
-            const second = Math.floor(currTime % 60);
+            const second = Math.floor(currTime % 60).toString().padStart(2, '0');
             setCurrentTime({
                 minute,
                 second
             });
         }, 500);
         return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        console.log("Player mounted");
+        return () => console.log("Player unmounted");
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            stopAudio();
+            setIsPlaying(false);
+        };
     }, []);
 
 
@@ -93,8 +116,9 @@ export default function Player() {
                     <input
                         type="range"
                         min="0"
-                        max={totalSeconds}
-                        default="0"
+                        max={totalSeconds ? totalSeconds : 0}
+                        value={seconds || 0 }
+                        //default="0"
                         step={0.1}
                         value={seconds}
                         className="timeline"
