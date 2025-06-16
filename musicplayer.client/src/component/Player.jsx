@@ -26,6 +26,7 @@ export default function Player() {
 
     const [seconds, setSeconds] = useState(0);
     const [totalSeconds, setTotalSeconds] = useState(0);
+    const [isScrubbing, setIsScrubbing] = useState(false);
 
 
     // controls the slider
@@ -42,6 +43,12 @@ export default function Player() {
                 minute: min,
                 second: sec
             });
+            setSeconds(getCurrTime());
+
+            /*if (seconds >= totalSeconds) {
+                setIsPlaying(false);
+            }
+            */
 
         };
 
@@ -54,19 +61,22 @@ export default function Player() {
 
     }, []);
         
-
+    // continuously updates the timeline during playing, is paused during scrubbing
     useEffect(() => {
         const interval = setInterval(() => {
-            const currTime = getCurrTime();
-            const minute = Math.floor(currTime / 60);
-            const second = Math.floor(currTime % 60).toString().padStart(2, '0');
-            setCurrentTime({
-                minute,
-                second
-            });
-        }, 500);
+            if (!isScrubbing) {
+                const currTime = getCurrTime();
+                const minute = Math.floor(currTime / 60);
+                const second = Math.floor(currTime % 60).toString().padStart(2, '0');
+                setCurrentTime({
+                    minute,
+                    second
+                });
+                setSeconds(currTime);
+            }
+        }, 100);
         return () => clearInterval(interval);
-    }, []);
+    }, [isScrubbing]);
 
     useEffect(() => {
         console.log("Player mounted");
@@ -80,6 +90,23 @@ export default function Player() {
         };
     }, []);
 
+    // resets the play state once audio ends
+    useEffect(() => {
+        const au = getAudio();
+
+        if (!au) return;
+        const resetEnd = () => {
+            setIsPlaying(false);
+        };
+
+        au.on('end', resetEnd);
+
+        return () => {
+            au.off('end', resetEnd);
+        };
+        
+    }, [setIsPlaying]);
+
 
     const playingButton = () => {
         if (isPlaying) {
@@ -92,6 +119,8 @@ export default function Player() {
             setIsPlaying(true);
         }
     };
+
+    console.log("Seconds:", seconds);
 
     return (
         <div className="component">
@@ -118,7 +147,6 @@ export default function Player() {
                     min="0"
                     max={totalSeconds ? totalSeconds : 0}
                     value={seconds || 0}
-                    //default="0"
                     step={0.1}
                     value={seconds}
                     className="timeline"
@@ -126,8 +154,11 @@ export default function Player() {
                         const newTime = parseFloat(e.target.value);
                         setSeconds(newTime);
                     }}
+                    onMouseDown={() => setIsScrubbing(true)}
                     onMouseUp={(e) => {
+                        setIsScrubbing(false);
                         const newTime = parseFloat(e.target.value);
+                        setSeconds(newTime);
                         seekAudio(newTime);
                     }}
                 />
