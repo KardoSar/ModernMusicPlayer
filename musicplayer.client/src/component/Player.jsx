@@ -117,16 +117,18 @@ export default function Player() {
                     type="range"
                     min="0"
                     max={totalSeconds ? totalSeconds : 0}
-                    value={seconds || 0 }
+                    value={seconds || 0}
                     //default="0"
                     step={0.1}
                     value={seconds}
                     className="timeline"
                     onChange={(e) => {
                         const newTime = parseFloat(e.target.value);
-                        seekAudio(newTime);
                         setSeconds(newTime);
-                            
+                    }}
+                    onMouseUp={(e) => {
+                        const newTime = parseFloat(e.target.value);
+                        seekAudio(newTime);
                     }}
                 />
             </div>

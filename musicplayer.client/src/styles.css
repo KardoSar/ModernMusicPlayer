@@ -54,7 +54,6 @@ body {
     width: 80%;
     display: flex;
     justify-content: space-between;
-    color: #828282;
     font-size: smaller;
     align-items: baseline;
 }
@@ -66,13 +65,40 @@ body {
 
 .timeline {
     width: 80%;
-    background: transparent;
-    background-color: black;
+    cursor: pointer;
+    background-color: blue;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    
 }
 
-input[type="range"] {
-    background-color: #27ae60;
+.timeline::-webkit-slider-runnable-track {
+    background-color: gray;
+    height: 5px;
 }
+    
+
+
+
+.timeline::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    margin-top: -7px;
+
+    height: 18px;
+    width: 18px;
+    background-color: #5D3FD3;
+    border-radius: 50%;
+
+}
+
+
+/*input[type="range"] {
+    background-color: gray;
+}
+    */
 
 @media (max-width: 900px) {
     .component {

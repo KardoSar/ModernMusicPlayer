@@ -8,6 +8,7 @@ export const getAudio = (onLoadCallBack) => {
         audio = new Howl({
             src: [menutheme],
             html5: true,
+            preload: 'auto',
             onload: () => {
                 console.log("Audio loaded successfully");
                 if (onLoadCallBack)
