@@ -8,7 +8,8 @@ import { IconContext } from "react-icons";
 import '../styles.css';
 
 import { playAudio, pauseAudio, seekAudio, stopAudio, getCurrTime, getDuration, getAudio } from './Audio';
-
+import serene from '../assets/coverArt/serene.jpg';
+import GradientBG from "./Gradient";
 
 
 export default function Player() {
@@ -44,12 +45,6 @@ export default function Player() {
                 second: sec
             });
             setSeconds(getCurrTime());
-
-            /*if (seconds >= totalSeconds) {
-                setIsPlaying(false);
-            }
-            */
-
         };
 
         if (audio.state() === 'loaded') {
@@ -77,11 +72,6 @@ export default function Player() {
         }, 100);
         return () => clearInterval(interval);
     }, [isScrubbing]);
-
-    useEffect(() => {
-        console.log("Player mounted");
-        return () => console.log("Player unmounted");
-    }, []);
 
     useEffect(() => {
         return () => {
@@ -120,14 +110,12 @@ export default function Player() {
         }
     };
 
-    console.log("Seconds:", seconds);
-
     return (
         <div className="component">
             <h2>Now Playing: </h2>
             <img
                 className="musicCover"
-                src="https://picsum.photos/200/200"
+                src={serene}
             />
             <div>
                 <h3 className="title">Menu Theme</h3>
@@ -148,7 +136,6 @@ export default function Player() {
                     max={totalSeconds ? totalSeconds : 0}
                     value={seconds || 0}
                     step={0.1}
-                    value={seconds}
                     className="timeline"
                     onChange={(e) => {
                         const newTime = parseFloat(e.target.value);

@@ -1,7 +1,7 @@
-import Tea from '../assets/cover art/tea.jpg';
-import Skies from '../assets/cover art/skies.jpg';
-import Serene from '../assets/cover art/serene.jpg';
-import Shrouded from '../assets/cover art/shrouded.jpg';
+import Tea from '../assets/coverArt/tea.jpg';
+import Skies from '../assets/coverArt/skies.jpg';
+import Serene from '../assets/coverArt/serene.jpg';
+import Shrouded from '../assets/coverArt/shrouded.jpg';
 
 const CoverArts = [
     { id: 1, image: Tea },
