@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import useSound from "use-sound";
-import menutheme from "../assets/menutheme.mp3";
+//import useSound from "use-sound";
+//import menutheme from "../assets/menutheme.mp3";
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai";
 import { IoPlayCircleOutline, IoPauseCircleOutline } from "react-icons/io5";
 import { BiSkipNext, BiSkipPrevious } from "react-icons/bi";
 import { IconContext } from "react-icons";
 import '../styles.css';
 
-import { playAudio, pauseAudio, seekAudio, getCurrTime, getDuration } from './Audio';
+import { playAudio, pauseAudio, seekAudio, getCurrTime, getDuration, getAudio } from './Audio';
 
 
 
@@ -24,23 +24,23 @@ export default function Player() {
         second: "",
     });
 
-    const [seconds, setSeconds] = useState();
-
-    const duration = getDuration();
+    const [seconds, setSeconds] = useState(0);
+    const [totalSeconds, setTotalSeconds] = useState(0);
 
     //const [play, { pause, duration, sound }] = useSound(menutheme);
 
     useEffect(() => {
-        if (duration) {
-            //const second = duration / 1000;
-            const second = duration
-            const minute = Math.floor(second / 60);
-            const remainingSeconds = Math.floor(second % 60);
+        getAudio().once('load', () => {
+            const audioDuration = getDuration();
+            setTotalSeconds(audioDuration);
+            const min = Math.floor(audioDuration / 60);
+            const sec = Math.floor(audioDuration % 60).toString().padStart(2, '0');
             setTime({
-                minute: minute,
-                second: remainingSeconds
+                minute: min,
+                second: sec
             });
-        }
+
+        });
     }, []);
         
 
@@ -53,7 +53,7 @@ export default function Player() {
                 minute,
                 second
             });
-        }, 1000);
+        }, 500);
         return () => clearInterval(interval);
     }, []);
 
@@ -93,7 +93,7 @@ export default function Player() {
                     <input
                         type="range"
                         min="0"
-                        max={duration}
+                        max={totalSeconds}
                         default="0"
                         step={0.1}
                         value={seconds}
@@ -108,25 +108,25 @@ export default function Player() {
                 </div>
                 <div>
                     <button className="playButton">
-                        <IconContext.Provider value={{ size: "3em", color: "#27AE60" }}>
+                        <IconContext.Provider value={{ size: "3em", color: "#5D3FD3" }}>
                             <BiSkipPrevious />
                         </IconContext.Provider>
                     </button>
                     {!isPlaying ? (
                         <button className="playButton" onClick={playingButton}>
-                            <IconContext.Provider value={{ size: "3em", color: "#27AE60" }}>
+                            <IconContext.Provider value={{ size: "3em", color: "#5D3FD3" }}>
                                 <IoPlayCircleOutline />
                             </IconContext.Provider>
                         </button>
                     ) : (
                         <button className="playButton" onClick={playingButton}>
-                            <IconContext.Provider value={{ size: "3em", color: "#27AE60" }}>
+                            <IconContext.Provider value={{ size: "3em", color: "#5D3FD3" }}>
                                 <IoPauseCircleOutline />
                             </IconContext.Provider>
                         </button>
                     )}
                     <button className="playButton">
-                        <IconContext.Provider value={{ size: "3em", color: "#27AE60" }}>
+                        <IconContext.Provider value={{ size: "3em", color: "#5D3FD3" }}>
                             <BiSkipNext />
                         </IconContext.Provider>
                     </button>
