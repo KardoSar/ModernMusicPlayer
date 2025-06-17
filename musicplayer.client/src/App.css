@@ -7,10 +7,12 @@
     */
 
 #root {
-    position: absolute;
+    position: relative;
     left:0px;
     right: 0px;
     top: 0px;
+    width: 100%;
+    min-height: 100vh;
 }
 
 th, td {
