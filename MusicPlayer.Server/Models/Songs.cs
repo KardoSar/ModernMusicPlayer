@@ -2,7 +2,6 @@
 {
     public class SongModel
     {
-
         public int Id { get; set; }
         public required string Title { get; set; }
         public string? Artist { get; set; }
