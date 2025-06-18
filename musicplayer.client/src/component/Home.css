@@ -40,15 +40,21 @@ body {
     font-family: Montserrat;
     font-size: 30px;
     color: azure;
+    display: inline-block;
     box-shadow: inherit;
     margin-inline: auto;
     overflow: hidden;
     white-space: nowrap;
     border-right: 1px solid;
-    animation: typeWriter 3s steps(22) forwards, blink 0.75s step-end infinite;
+    animation: typeWriter 6s steps(40) forwards, blink 0.7s step-end infinite;
+    overflow: hidden;
+    width: 40%;
+    justify-content: center;
+    margin-top: 3vh;
+    margin-left: 42vw;
 }
 
-/*@keyframes typeWriter {
+@keyframes typeWriter {
     from {
         width: 0;
     }
@@ -59,11 +65,13 @@ body {
 }
 
 @keyframes blink {
-    50% {
+    10% {
         border-color: transparent;
     }
+    45%, 95%, 100% {
+        border-color: transparent;
+    }  
 }
-    */
 
 @keyframes gradientShift {
     0% {

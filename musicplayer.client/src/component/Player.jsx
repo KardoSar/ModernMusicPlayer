@@ -10,6 +10,7 @@ import '../styles.css';
 import { playAudio, pauseAudio, seekAudio, stopAudio, getCurrTime, getDuration, getAudio } from './Audio';
 import serene from '../assets/coverArt/serene.jpg';
 import GradientBG from "./Gradient";
+import Metas from "./MetaData";
 
 
 export default function Player() {
@@ -28,7 +29,6 @@ export default function Player() {
     const [seconds, setSeconds] = useState(0);
     const [totalSeconds, setTotalSeconds] = useState(0);
     const [isScrubbing, setIsScrubbing] = useState(false);
-
 
     // controls the slider
     useEffect(() => {
