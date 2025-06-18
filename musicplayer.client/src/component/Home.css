@@ -1,0 +1,94 @@
+body {
+    width: 100%;
+    height: 100%;
+}
+
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    min-height: 96vh;
+    transition: background 1s ease-in-out;
+    background: linear-gradient( to bottom right, rgba(255, 0, 255, 0.6), rgba(101, 201, 174, 0.8));
+    animation: gradientShift 40s ease infinite;
+    background-size: 400% 400%;
+    z-index: 0;
+}
+
+.second-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: background 5s ease-in-out;
+    background: radial-gradient(rgba(98, 255, 255, 0.8), rgba(255, 0, 200, 0.8));
+    animation: oppositeGradientShift 40s ease infinite;
+    background-size: 300% 300%;
+    z-index: -1;
+    filter: blur(10px);
+
+}
+
+.welcome {
+    font-family: Montserrat;
+    font-size: 30px;
+    color: azure;
+    box-shadow: inherit;
+    margin-inline: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 1px solid;
+    animation: typeWriter 3s steps(22) forwards, blink 0.75s step-end infinite;
+}
+
+/*@keyframes typeWriter {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+    */
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes oppositeGradientShift {
+    0% {
+        background-position: 50% 0%;
+    }
+
+    50% {
+        background-position: 50% 50%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
